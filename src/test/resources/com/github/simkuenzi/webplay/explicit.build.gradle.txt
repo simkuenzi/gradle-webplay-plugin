@@ -1,0 +1,12 @@
+plugins {
+    id 'com.github.simkuenzi.webplay'
+}
+
+webplay {
+   recordTo = file("${project.rootDir}/scenario.xml")
+   recorderPort = 11011
+   appPort = 11012
+   mimeTypes = ['text/html', 'application/x-www-form-urlencoded']
+   startPath = '/myApp/index.html'
+   stopFile = file("${project.rootDir}/stop")
+}

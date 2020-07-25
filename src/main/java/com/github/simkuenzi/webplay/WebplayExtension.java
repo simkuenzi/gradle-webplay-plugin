@@ -22,7 +22,7 @@ public class WebplayExtension {
     public WebplayExtension(ObjectFactory objectFactory, Project project) {
         Path webplayDir = project.getBuildDir().toPath().resolve("webplay");
         recordTo = objectFactory.property(File.class);
-        recordTo.set(webplayDir.resolve("scenario.xml").toFile());
+        recordTo.set(webplayDir.resolve("test.xml").toFile());
         recorderPort = objectFactory.property(Integer.class);
         recorderPort.set(22016);
         appPort = objectFactory.property(Integer.class);

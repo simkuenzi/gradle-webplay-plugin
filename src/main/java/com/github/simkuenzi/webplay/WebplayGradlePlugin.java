@@ -21,13 +21,15 @@ public class WebplayGradlePlugin implements Plugin<Project> {
                     if (!Files.exists(config.getStopFile().get().toPath())) {
                         Files.createFile(config.getStopFile().get().toPath());
                     }
-                    Recorder recorder = new Recorder(
-                            config.getRecordTo().get().toPath(),
+                    Recorder recorder = new Recorder();
+                    recorder.open(
                             config.getRecorderPort().get(),
+                            config.getStartPath().get())
+                    .run(
                             config.getAppPort().get(),
+                            config.getRecordTo().get().toPath(),
                             config.getMimeTypes().get(),
-                            config.getStartPath().get());
-                    recorder.start().waitTillStop(config.getStopFile().get().toPath());
+                            config.getStopFile().get().toPath());
                 }
         ));
 

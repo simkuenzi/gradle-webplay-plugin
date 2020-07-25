@@ -22,7 +22,7 @@ java {
 
 gradlePlugin {
     plugins {
-        simplePlugin {
+        webplayPlugin {
             id = 'com.github.simkuenzi.webplay'
             implementationClass = 'com.github.simkuenzi.webplay.WebplayGradlePlugin'
         }

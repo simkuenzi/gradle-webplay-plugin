@@ -2,6 +2,7 @@ plugins {
     id 'java-gradle-plugin'
     id 'maven-publish'
     id 'net.researchgate.release' version '2.8.1'
+    id "com.gradle.plugin-publish" version "0.12.0"
 }
 
 group 'com.github.simkuenzi'
@@ -26,6 +27,18 @@ gradlePlugin {
         webplayPlugin {
             id = 'com.github.simkuenzi.webplay'
             implementationClass = 'com.github.simkuenzi.webplay.WebplayGradlePlugin'
+            displayName = 'WebPlay Plugin for Gradle'
+            description = 'Records and replays HTTP requests for test purpose'
         }
     }
+}
+
+pluginBundle {
+    website = 'https://github.com/simkuenzi/gradle-webplay-plugin'
+    vcsUrl = 'https://github.com/simkuenzi/gradle-webplay-plugin.git'
+    tags = ['testing', 'web']
+}
+
+release {
+    buildTasks = ['publishPlugins']
 }

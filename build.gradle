@@ -3,6 +3,7 @@ plugins {
     id 'maven-publish'
     id 'net.researchgate.release' version '2.8.1'
     id "com.gradle.plugin-publish" version "0.12.0"
+    id 'com.github.simkuenzi.readme' version '0.0'
 }
 
 group 'com.github.simkuenzi'
@@ -13,7 +14,7 @@ repositories {
 }
 
 dependencies {
-    implementation group: 'com.github.simkuenzi', name: 'webplay', version: '1.1'
+    implementation group: 'com.github.simkuenzi', name: 'webplay', version: webplayVersion
     testImplementation group: 'junit', name: 'junit', version: '4.12'
 }
 
@@ -40,5 +41,9 @@ pluginBundle {
 }
 
 release {
-    buildTasks = ['publishPlugins']
+    buildTasks = ['publishPlugins', 'readme']
+}
+
+readme {
+    overwrite = true
 }

@@ -8,8 +8,8 @@ import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 
 import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.*;
 
 import static org.junit.Assert.assertEquals;
 
@@ -31,13 +31,17 @@ public class WebplayGradlePluginTest {
         Files.write(testProjectDir.newFile("build.gradle").toPath(),
                 getClass().getResourceAsStream(buildFile).readAllBytes());
 
-        Future<List<BuildTask>> recordTasks = Executors.newSingleThreadExecutor().submit(() -> GradleRunner.create()
+        List<BuildTask> recordTasks = new ArrayList<>();
+
+        Thread recordThread = new Thread(() ->
+                recordTasks.addAll(GradleRunner.create()
                 .forwardOutput()
                 .withProjectDir(testProjectDir.getRoot())
                 .withArguments("record", "--stacktrace")
                 .withPluginClasspath()
                 .build()
-                .getTasks());
+                .getTasks()));
+        recordThread.start();
 
         // Wait for stop file being created
         Thread.sleep(1_000);
@@ -50,6 +54,7 @@ public class WebplayGradlePluginTest {
                 .build()
                 .getTasks().forEach(t -> assertEquals(TaskOutcome.SUCCESS, t.getOutcome()));
 
-        recordTasks.get(10, TimeUnit.SECONDS).forEach(t -> assertEquals(TaskOutcome.SUCCESS, t.getOutcome()));
+        recordThread.join(3_000);
+        recordTasks.forEach(t -> assertEquals(TaskOutcome.SUCCESS, t.getOutcome()));
     }
 }

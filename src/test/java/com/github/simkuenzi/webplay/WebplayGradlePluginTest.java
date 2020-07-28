@@ -50,6 +50,6 @@ public class WebplayGradlePluginTest {
                 .build()
                 .getTasks().forEach(t -> assertEquals(TaskOutcome.SUCCESS, t.getOutcome()));
 
-        recordTasks.get(3, TimeUnit.SECONDS).forEach(t -> assertEquals(TaskOutcome.SUCCESS, t.getOutcome()));
+        recordTasks.get(10, TimeUnit.SECONDS).forEach(t -> assertEquals(TaskOutcome.SUCCESS, t.getOutcome()));
     }
 }

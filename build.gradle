@@ -23,6 +23,12 @@ java {
     targetCompatibility JavaVersion.VERSION_11
 }
 
+test {
+    testLogging {
+        exceptionFormat "full"
+    }
+}
+
 gradlePlugin {
     plugins {
         webplayPlugin {

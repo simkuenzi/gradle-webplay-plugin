@@ -3,7 +3,7 @@ plugins {
     id 'maven-publish'
     id 'net.researchgate.release' version '2.8.1'
     id "com.gradle.plugin-publish" version "0.12.0"
-    id 'com.github.simkuenzi.readme' version '0.0'
+    id 'com.github.simkuenzi.readme' version '0.1'
 }
 
 group 'com.github.simkuenzi'

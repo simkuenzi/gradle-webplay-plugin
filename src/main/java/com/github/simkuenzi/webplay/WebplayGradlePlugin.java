@@ -35,7 +35,11 @@ public class WebplayGradlePlugin implements Plugin<Project> {
 
         project.getTasks().register("stop", new WebplayTask(
                 String.format("Stops recording and writes output to %s.", config.getRecordTo().get().toString()),
-                () -> Files.writeString(config.getStopFile().get().toPath(), "stop")
+                () -> {
+                    if (Files.exists(config.getStopFile().get().toPath())) {
+                        Files.writeString(config.getStopFile().get().toPath(), "stop");
+                    }
+                }
         ));
     }
 }

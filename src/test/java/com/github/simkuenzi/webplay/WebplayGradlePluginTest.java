@@ -11,7 +11,7 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 public class WebplayGradlePluginTest {
     @Rule
@@ -32,29 +32,49 @@ public class WebplayGradlePluginTest {
                 getClass().getResourceAsStream(buildFile).readAllBytes());
 
         List<BuildTask> recordTasks = new ArrayList<>();
+        Throwable[] recordException = new Throwable[1];
 
-        Thread recordThread = new Thread(() ->
+        Thread recordThread = new Thread(() -> {
+            try {
                 recordTasks.addAll(GradleRunner.create()
-                .forwardOutput()
-                .withProjectDir(testProjectDir.getRoot())
-                .withArguments("record", "--stacktrace")
-                .withPluginClasspath()
-                .build()
-                .getTasks()));
+                        .forwardOutput()
+                        .withProjectDir(testProjectDir.getRoot())
+                        .withArguments("record", "--stacktrace")
+                        .withPluginClasspath()
+                        .build()
+                        .getTasks());
+            } catch (Throwable e) {
+                e.printStackTrace();
+                recordException[0] = e;
+            }
+        });
+
         recordThread.start();
 
-        // Wait for stop file being created
-        Thread.sleep(1_000);
+        try {
+            int maxStopTry = 100;
+            for (int stopTry = 0; stopTry < maxStopTry; stopTry++) {
+                GradleRunner.create()
+                        .forwardOutput()
+                        .withProjectDir(testProjectDir.getRoot())
+                        .withArguments("stop", "--stacktrace")
+                        .withPluginClasspath()
+                        .build()
+                        .getTasks().forEach(t -> assertEquals(TaskOutcome.SUCCESS, t.getOutcome()));
+                recordThread.join(200);
+                if (!recordThread.isAlive()) {
+                    break;
+                }
+            }
+            assertFalse("Stopping of recorder thread takes too long.", recordThread.isAlive());
+        } finally {
+            if (recordThread.isAlive()) {
+                recordThread.interrupt();
+                recordThread.join();
+            }
+        }
 
-        GradleRunner.create()
-                .forwardOutput()
-                .withProjectDir(testProjectDir.getRoot())
-                .withArguments("stop", "--stacktrace")
-                .withPluginClasspath()
-                .build()
-                .getTasks().forEach(t -> assertEquals(TaskOutcome.SUCCESS, t.getOutcome()));
-
-        recordThread.join(3_000);
+        assertNull("Exception thrown by recorder thread.", recordException[0]);
         recordTasks.forEach(t -> assertEquals(TaskOutcome.SUCCESS, t.getOutcome()));
     }
 }

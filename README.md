@@ -14,7 +14,7 @@ It records requests to your web application, which can be replayed in your test 
 To get started add this configuration to your build.gradle file.
 ```groovy 
 plugins {
-    id 'com.github.simkuenzi.webplay' version '0.1'
+    id 'com.github.simkuenzi.webplay' version '0.2'
 }   
 
 webplay {
@@ -56,7 +56,7 @@ repositories {
 }
 
 dependencies {
-    testImplementation group: 'com.github.simkuenzi', name: 'webplay', version: '1.1'
+    testImplementation group: 'com.github.simkuenzi', name: 'webplay', version: '1.3'
 }
 ```
 

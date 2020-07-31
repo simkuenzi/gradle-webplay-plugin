@@ -54,7 +54,6 @@ public class WebplayGradlePluginTest {
         try {
             int maxStopTry = 100;
             for (int stopTry = 0; stopTry < maxStopTry; stopTry++) {
-                System.out.println("Try stop");
                 GradleRunner.create()
                         .forwardOutput()
                         .withProjectDir(testProjectDir.getRoot())
@@ -64,22 +63,17 @@ public class WebplayGradlePluginTest {
                         .getTasks().forEach(t -> assertEquals(TaskOutcome.SUCCESS, t.getOutcome()));
                 recordThread.join(200);
                 if (!recordThread.isAlive()) {
-                    System.out.println("Stopped");
                     break;
                 }
             }
             assertFalse("Stopping of recorder thread takes too long.", recordThread.isAlive());
         } finally {
-            System.out.println("Finally");
             if (recordThread.isAlive()) {
-                System.out.println("Force stop");
                 recordThread.interrupt();
                 recordThread.join();
-                System.out.println("Force stop complete");
             }
         }
 
-        System.out.println("Test end");
         assertNull("Exception thrown by recorder thread.", recordException[0]);
         recordTasks.forEach(t -> assertEquals(TaskOutcome.SUCCESS, t.getOutcome()));
     }

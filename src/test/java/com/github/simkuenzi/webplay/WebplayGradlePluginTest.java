@@ -71,8 +71,8 @@ public class WebplayGradlePluginTest {
             assertFalse("Stopping of recorder thread takes too long.", recordThread.isAlive());
         } finally {
             System.out.println("Finally");
-            if (recordThread.isAlive())
-                System.out.println("Force stopped");{
+            if (recordThread.isAlive()) {
+                System.out.println("Force stop");
                 recordThread.interrupt();
                 recordThread.join();
                 System.out.println("Force stop complete");

@@ -3,6 +3,7 @@
 ![Java CI with Gradle](https://github.com/simkuenzi/gradle-webplay-plugin/workflows/Java%20CI%20with%20Gradle/badge.svg)
 ![Codecov](https://img.shields.io/codecov/c/github/simkuenzi/gradle-webplay-plugin)
 ![GitHub](https://img.shields.io/github/license/simkuenzi/gradle-webplay-plugin)
+![Gradle Plugin Portal](https://img.shields.io/maven-metadata/v?label=Gradle+Plugin&color=blue&metadataUrl=https://plugins.gradle.org/m2/com/github/simkuenzi/gradle-webplay-plugin/maven-metadata.xml)
 
 ## Summary
 The WebPlay Plugin helps you to create tests for your web application. 

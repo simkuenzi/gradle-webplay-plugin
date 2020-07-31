@@ -1,5 +1,9 @@
 # WebPlay Plugin for Gradle
 
+![Java CI with Gradle](https://github.com/simkuenzi/gradle-webplay-plugin/workflows/Java%20CI%20with%20Gradle/badge.svg)
+![Codecov](https://img.shields.io/codecov/c/github/simkuenzi/gradle-webplay-plugin)
+![GitHub](https://img.shields.io/github/license/simkuenzi/gradle-webplay-plugin)
+
 ## Summary
 The WebPlay Plugin helps you to create tests for your web application. 
 It records requests to your web application, which can be replayed in your test suite.
